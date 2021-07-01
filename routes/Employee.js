@@ -59,4 +59,29 @@ router.delete("/deleteEmployee/:_id", async (req, res) => {
   }
 });
 
+//update emp by _id
+router.patch("/editEmployee", async (req, res) => {
+  try {
+    const {
+      name,
+      mobile,
+      jobtype,
+      preferredlocation,
+      profilepicurl,
+      email,
+      dob,
+      _id,
+    } = req.body;
+    const employeeUpdated = await EmployeeModel.findOneAndUpdate(
+      { _id },
+      { name, mobile, jobtype, preferredlocation, profilepicurl, email, dob }
+    );
+    res
+      .status(200)
+      .json({ message: `Employee with email : ${email} updated successfully` });
+  } catch (err) {
+    res.status(500).json({ message: "Error while updating employee" });
+  }
+});
+
 module.exports = router;
